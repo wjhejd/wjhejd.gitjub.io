@@ -4,5 +4,4 @@
 - 我暂时没有项目！
 - 我的联系方式:Wangjh3279056583@gmail.com
 - 我的文件最初尝试！
-点这里打开我的文件:https://github.com/wjhejd/wjhejd.github.io/blob/demo/index.html
 - 
