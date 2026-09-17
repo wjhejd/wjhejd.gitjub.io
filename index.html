@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="从微积分、线性代数到数学分析的开放学习资源导航。" />
+  <meta name="theme-color" content="#07111f" />
+  <title>王嘉豪的数学学习空间</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(15, 29, 48, 0.82);
+      --panel-strong: #0f1d30;
+      --line: rgba(255, 255, 255, 0.10);
+      --text: #f5f8ff;
+      --muted: #a9b8cd;
+      --blue: #64b5ff;
+      --cyan: #58e0cf;
+      --gold: #ffc96b;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(67, 137, 255, .18), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(88, 224, 207, .11), transparent 27%),
+        var(--bg);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      width: min(calc(100% - 36px), var(--max));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 17, 31, .82);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand { font-weight: 800; letter-spacing: .03em; }
+    .brand span { color: var(--cyan); }
+
+    .nav-links { display: flex; gap: 22px; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .94rem;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .hero {
+      min-height: 74vh;
+      display: grid;
+      place-items: center;
+      padding: 92px 0 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--cyan);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(2.65rem, 7vw, 5.6rem);
+      line-height: 1.05;
+      letter-spacing: -.055em;
+    }
+
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(100deg, var(--blue), var(--cyan));
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .lead {
+      max-width: 680px;
+      margin: 24px 0 32px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+    }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 20px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 750;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(100,181,255,.55);
+      background: rgba(100,181,255,.10);
+    }
+
+    .button.primary {
+      border-color: transparent;
+      color: #06111c;
+      background: linear-gradient(100deg, var(--blue), var(--cyan));
+    }
+
+    .formula-card {
+      padding: 32px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(100,181,255,.10), rgba(88,224,207,.04));
+      box-shadow: 0 28px 80px rgba(0,0,0,.28);
+    }
+
+    .formula-card .formula {
+      margin: 20px 0;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      text-align: center;
+    }
+
+    .formula-card p { margin: 0; color: var(--muted); }
+
+    section { padding: 82px 0; }
+    .section-head { max-width: 760px; margin-bottom: 34px; }
+    .section-head h2 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      line-height: 1.15;
+      letter-spacing: -.035em;
+    }
+    .section-head p { margin: 0; color: var(--muted); }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .route-step, .resource-card, .notice {
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .route-step {
+      position: relative;
+      min-height: 190px;
+      padding: 22px;
+      border-radius: 18px;
+    }
+
+    .route-step .number {
+      display: block;
+      margin-bottom: 26px;
+      color: var(--cyan);
+      font-weight: 850;
+    }
+    .route-step h3 { margin: 0 0 8px; font-size: 1.08rem; }
+    .route-step p { margin: 0; color: var(--muted); font-size: .91rem; }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+
+    .filter {
+      padding: 9px 15px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      font: inherit;
+      cursor: pointer;
+    }
+    .filter:hover, .filter.active {
+      color: #06111c;
+      border-color: transparent;
+      background: var(--cyan);
+    }
+
+    .resources {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .resource-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 310px;
+      padding: 26px;
+      border-radius: 20px;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .resource-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(88,224,207,.40);
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .tag {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(100,181,255,.10);
+      color: var(--blue);
+      font-size: .76rem;
+      font-weight: 750;
+    }
+    .tag.license { color: var(--cyan); background: rgba(88,224,207,.09); }
+
+    .resource-card h3 { margin: 0; font-size: 1.3rem; }
+    .resource-card .english { color: var(--muted); font-size: .87rem; }
+    .resource-card p { color: var(--muted); }
+    .resource-card .card-actions { margin-top: auto; display: flex; gap: 10px; }
+    .resource-card .button { min-height: 42px; padding: 0 15px; font-size: .9rem; }
+
+    .notice {
+      padding: 28px;
+      border-radius: 20px;
+      border-left: 4px solid var(--gold);
+    }
+    .notice h3 { margin-top: 0; }
+    .notice p { margin-bottom: 0; color: var(--muted); }
+
+    footer {
+      padding: 42px 0 54px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .hidden { display: none; }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .formula-card { max-width: 620px; }
+      .route { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 650px) {
+      .nav-links { display: none; }
+      .hero { min-height: auto; padding-top: 68px; }
+      .resources, .route { grid-template-columns: 1fr; }
+      .route-step { min-height: auto; }
+      .route-step .number { margin-bottom: 12px; }
+      section { padding: 62px 0; }
+      .resource-card { min-height: 0; }
+      .resource-card .card-actions { margin-top: 14px; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">MATH<span>SPACE</span></div>
+      <div class="nav-links">
+        <a href="#route">学习路线</a>
+        <a href="#resources">开放资源</a>
+        <a href="#about">使用说明</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Structure · Proof · Insight</p>
+        <h1>王嘉豪的<br><span class="gradient-text">数学学习空间</span></h1>
+        <p class="lead">
+          从微积分与线性代数出发，逐步进入证明、结构与数学分析。
+          这里收录可合法访问和分享的开放教材、课程与学习路线。
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#resources">开始学习</a>
+          <a class="button" href="#route">查看路线</a>
+        </div>
+      </div>
+
+      <aside class="formula-card" aria-label="数学学习理念">
+        <p>理解不是记住结论，而是看见结构为何必然如此。</p>
+        <div class="formula">ε → δ</div>
+        <p>定义 → 定理 → 证明 → 反例 → 结构</p>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section id="route">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Learning Path</p>
+          <h2>从计算走向严格理解</h2>
+          <p>路线按依赖关系排列：先建立直觉和计算能力，再进入证明与抽象结构。</p>
+        </div>
+
+        <div class="route">
+          <article class="route-step">
+            <span class="number">01</span>
+            <h3>预备数学</h3>
+            <p>函数、三角、指数对数、解析几何与基本代数。</p>
+          </article>
+          <article class="route-step">
+            <span class="number">02</span>
+            <h3>单变量微积分</h3>
+            <p>极限、连续、导数、积分、级数及其逻辑联系。</p>
+          </article>
+          <article class="route-step">
+            <span class="number">03</span>
+            <h3>多变量微积分</h3>
+            <p>偏导数、梯度、重积分、曲线积分与向量场。</p>
+          </article>
+          <article class="route-step">
+            <span class="number">04</span>
+            <h3>线性代数</h3>
+            <p>向量空间、线性映射、特征结构与内积空间。</p>
+          </article>
+          <article class="route-step">
+            <span class="number">05</span>
+            <h3>证明与分析</h3>
+            <p>量词、证明方法、严格极限、实数完备性与度量空间。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Open Resources</p>
+          <h2>合法、可靠、可分享的学习资源</h2>
+          <p>所有按钮都指向作者、大学或开放教育项目的官方页面。</p>
+        </div>
+
+        <div class="filters" aria-label="资源分类筛选">
+          <button class="filter active" data-filter="all">全部</button>
+          <button class="filter" data-filter="foundation">预备数学</button>
+          <button class="filter" data-filter="calculus">微积分</button>
+          <button class="filter" data-filter="algebra">线性代数</button>
+          <button class="filter" data-filter="proof">证明与分析</button>
+        </div>
+
+        <div class="resources">
+          <article class="resource-card" data-category="foundation">
+            <div class="tags"><span class="tag">预备数学</span><span class="tag license">开放教材</span></div>
+            <h3>OpenStax 预备微积分</h3>
+            <span class="english">Precalculus 2e</span>
+            <p>系统复查函数、三角函数、指数与对数、解析几何，为微积分补齐入口知识。</p>
+            <div class="card-actions">
+              <a class="button primary" target="_blank" rel="noopener" href="https://openstax.org/details/books/precalculus-2e">进入官网</a>
+            </div>
+          </article>
+
+          <article class="resource-card" data-category="calculus">
+            <div class="tags"><span class="tag">单变量微积分</span><span class="tag license">开放教材</span></div>
+            <h3>OpenStax 微积分第一卷</h3>
+            <span class="english">Calculus Volume 1</span>
+            <p>覆盖函数、极限、导数和积分，适合作为第一遍系统学习的主教材。</p>
+            <div class="card-actions">
+              <a class="button primary" target="_blank" rel="noopener" href="https://openstax.org/details/books/calculus-volume-1">进入官网</a>
+            </div>
+          </article>
+
+          <article class="resource-card" data-category="calculus">
+            <div class="tags"><span class="tag">单变量课程</span><span class="tag license">MIT OCW</span></div>
+            <h3>MIT 18.01SC</h3>
+            <span class="english">Single Variable Calculus</span>
+            <p>面向自学者组织的视频、讲义、习题、例题和考试，适合与教材同步推进。</p>
+            <div class="card-actions">
+              <a class="button primary" target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/">学习课程</a>
+            </div>
+          </article>
+
+          <article class="resource-card" data-category="calculus">
+            <div class="tags"><span class="tag">多变量微积分</span><span class="tag license">开放教材</span></div>
+            <h3>OpenStax 微积分第三卷</h3>
+            <span class="english">Calculus Volume 3</span>
+            <p>从二维、三维空间进入向量值函数、偏导、重积分和向量微积分。</p>
+            <div class="card-actions">
+              <a class="button primary" target="_blank" rel="noopener" href="https://openstax.org/details/books/calculus-volume-3">进入官网</a>
+            </div>
+          </article>
+
+          <article class="resource-card" data-category="calculus">
+            <div class="tags"><span class="tag">多变量课程</span><span class="tag license">MIT OCW</span></div>
+            <h3>MIT 18.02SC</h3>
+            <span class="english">Multivariable Calculus</span>
+            <p>系统讲解矩阵与向量、梯度、方向导数、重积分、Green、Gauss 与 Stokes 定理。</p>
+            <div class="card-actions">
+              <a class="button primary" target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/">学习课程</a>
+            </div>
+          </article>
+
+          <article class="resource-card" data-category="algebra">
+            <div class="tags"><span class="tag">线性代数入门</span><span class="tag license">MIT OCW</span></div>
+            <h3>MIT 18.06SC</h3>
+            <span class="english">Linear Algebra · Gilbert Strang</span>
+            <p>从方程组和几何直觉进入子空间、正交性、特征值、正定矩阵与奇异值分解。</p>
+            <div class="card-actions">
+              <a class="button primary" target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/">学习课程</a>
+            </div>
+          </article>
+
+          <article class="resource-card" data-category="algebra">
+            <div class="tags"><span class="tag">线性代数进阶</span><span class="tag license">CC BY-NC</span></div>
+            <h3>线性代数应该这样学</h3>
+            <span class="english">Linear Algebra Done Right · Sheldon Axler</span>
+            <p>以线性映射和向量空间结构为核心。作者官网提供第四版英文及中文 PDF。</p>
+            <div class="card-actions">
+              <a class="button primary" target="_blank" rel="noopener" href="https://linear.axler.net/">官方教材页</a>
+            </div>
+          </article>
+
+          <article class="resource-card" data-category="proof">
+            <div class="tags"><span class="tag">证明入门</span><span class="tag license">CC BY-NC-ND</span></div>
+            <h3>证明之书</h3>
+            <span class="english">Book of Proof · Richard Hammack</span>
+            <p>学习集合、逻辑、量词、直接证明、反证法、归纳法与微积分中的证明。</p>
+            <div class="card-actions">
+              <a class="button primary" target="_blank" rel="noopener" href="https://richardhammack.github.io/BookOfProof/">阅读与下载</a>
+            </div>
+          </article>
+
+          <article class="resource-card" data-category="proof">
+            <div class="tags"><span class="tag">实分析</span><span class="tag license">CC BY-SA / BY-NC-SA</span></div>
+            <h3>基础分析</h3>
+            <span class="english">Basic Analysis · Jiří Lebl</span>
+            <p>从实数、序列与连续性进入导数、Riemann 积分、函数列和度量空间，并含多变量第二卷。</p>
+            <div class="card-actions">
+              <a class="button primary" target="_blank" rel="noopener" href="https://www.jirka.org/ra/">阅读与下载</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="notice">
+          <h3>版权与使用说明</h3>
+          <p>
+            本站只整理作者、大学、出版社或开放教育项目正式公开的资源。
+            本站不重新上传来源或授权不明确的商业教材；资源版权归原作者和发布机构所有，
+            下载、分享与改编应遵守对应页面标注的许可证。
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>© <span id="year"></span> 王嘉豪的数学学习空间 · 保持好奇，追问定义。</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const filters = document.querySelectorAll(".filter");
+    const cards = document.querySelectorAll(".resource-card");
+
+    filters.forEach((button) => {
+      button.addEventListener("click", () => {
+        filters.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+
+        const selected = button.dataset.filter;
+        cards.forEach((card) => {
+          const show = selected === "all" || card.dataset.category === selected;
+          card.classList.toggle("hidden", !show);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
